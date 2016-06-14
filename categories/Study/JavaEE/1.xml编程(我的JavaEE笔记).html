@@ -1,0 +1,474 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content=",,,,,," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="#一、xml解析注意：在解析xml文档时如果有些内容不想让解析器解析，则可以使用&amp;lt;![CDATA[&amp;gt; …]]&amp;gt;将相关内容包裹成CDATA区。
+##1、解析方式   dom（文档对象模型Document Object Model）：是w3c组织推荐的处理xml的一种方式；实现起来很方便，但是当xml文件太大的时候，JVM很可能支持不了。JVM最大支持64M内存。如果需要更大的内存可">
+<meta property="og:type" content="website">
+<meta property="og:title" content="1.xml编程(我的JavaEE笔记)">
+<meta property="og:url" content="http://yoursite.com/categories/Study/JavaEE/1.xml编程(我的JavaEE笔记).html">
+<meta property="og:site_name" content="YJ's Blog">
+<meta property="og:description" content="#一、xml解析注意：在解析xml文档时如果有些内容不想让解析器解析，则可以使用&amp;lt;![CDATA[&amp;gt; …]]&amp;gt;将相关内容包裹成CDATA区。
+##1、解析方式   dom（文档对象模型Document Object Model）：是w3c组织推荐的处理xml的一种方式；实现起来很方便，但是当xml文件太大的时候，JVM很可能支持不了。JVM最大支持64M内存。如果需要更大的内存可">
+<meta property="og:updated_time" content="2016-06-07T09:49:49.239Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.xml编程(我的JavaEE笔记)">
+<meta name="twitter:description" content="#一、xml解析注意：在解析xml文档时如果有些内容不想让解析器解析，则可以使用&amp;lt;![CDATA[&amp;gt; …]]&amp;gt;将相关内容包裹成CDATA区。
+##1、解析方式   dom（文档对象模型Document Object Model）：是w3c组织推荐的处理xml的一种方式；实现起来很方便，但是当xml文件太大的时候，JVM很可能支持不了。JVM最大支持64M内存。如果需要更大的内存可">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/categories/Study/JavaEE/1.xml编程(我的JavaEE笔记).html"/>
+
+  <title>
+  
+
+  
+    1.xml编程(我的JavaEE笔记) | YJ's Blog
+  
+</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right  ">
+    <div class="headband"></div>
+	
+	<!----------- add Fork me on Github ------------>
+    
+    <a href="https://github.com/yjaal"><img style="position: absolute; top: 500; left: 0; border: 0;" src="https://camo.githubusercontent.com/8b6b8ccc6da3aa5722903da7b58eb5ab1081adee/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_orange_ff7600.png"></a>
+    
+    <!----------- add Fork me on Github ------------>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">YJ's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Some Notes</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+      <p>#一、xml解析<br><strong>注意</strong>：在解析xml文档时如果有些内容不想让解析器解析，则可以使用&lt;![CDATA[&gt; …]]&gt;将相关内容包裹成CDATA区。</p>
+<p>##1、解析方式<br>   <strong>dom</strong>（文档对象模型Document Object Model）：是w3c组织推荐的处理xml的一种方式；实现起来很方便，但是当xml文件太大的时候，JVM很可能支持不了。JVM最大支持64M内存。如果需要更大的内存可以进行修改。使用-Xmx80m可以改变支持内存80M。<strong>一般我们使用此种方式解析</strong>。<br>   <strong>Sax</strong>（Simple API for XML）：不是官方标准，但是它是xml社区事实上的标准，几乎所有的xml解析器都支持它。效率高，查找数据方便，但是不适合增删改数据。它是一行一行的解析。<strong>查找时一般使用sax</strong>。</p>
+<p>##2、解析器<br>   jaxp是标准，dom4j最好用。</p>
+<p>##3、使用jaxp解析xml文档<br>（1）调用DocumentBuilderFactory.newInstance()方法得到创建DOM解析器的工厂；<br>（2）调用工厂对象的newDocumentBuilder()方法得到DOM解析器对象；<br>（3）调用DOM解析器对象的parse()方法解析XML文档，得到代表整个文档的Document对象，进行可以利用DOM特性对整个XML文档进行操作了。<br>例子(工程jaxp)：<br><strong>xml/book.xml</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;书架&gt;</span><br><span class="line">	&lt;书 name=&quot;yyy&quot;&gt;</span><br><span class="line">		&lt;售价&gt;109&lt;/售价&gt;</span><br><span class="line">		&lt;售价&gt;39元&lt;/售价&gt;</span><br><span class="line">		&lt;书名&gt;Java就业培训教程&lt;/书名&gt;</span><br><span class="line">		&lt;作者&gt;张孝祥&lt;/作者&gt;</span><br><span class="line">		&lt;售价&gt;120&lt;/售价&gt;&lt;/书&gt;</span><br><span class="line">&lt;/书架&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>src中</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line">package cn.itcast;</span><br><span class="line">import java.io.File;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import javax.xml.parsers.DocumentBuilder;</span><br><span class="line">import javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line">import javax.xml.parsers.ParserConfigurationException;</span><br><span class="line">import javax.xml.transform.Source;</span><br><span class="line">import javax.xml.transform.Transformer;</span><br><span class="line">import javax.xml.transform.TransformerConfigurationException;</span><br><span class="line">import javax.xml.transform.TransformerException;</span><br><span class="line">import javax.xml.transform.TransformerFactory;</span><br><span class="line">import javax.xml.transform.dom.DOMSource;</span><br><span class="line">import javax.xml.transform.stream.StreamResult;</span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.w3c.dom.Document;</span><br><span class="line">import org.w3c.dom.Element;</span><br><span class="line">import org.w3c.dom.Node;</span><br><span class="line">import org.w3c.dom.NodeList;</span><br><span class="line">import org.xml.sax.SAXException;</span><br><span class="line"></span><br><span class="line">public class Demo1 &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line">		/*1.调用DocumentBuilderFactory.newInstance()方法得到创建DOM解析器的工厂；</span><br><span class="line">          2.调用工厂对象的newDocumentBuilder()方法得到DOM解析器对象；</span><br><span class="line">          3.调用DOM解析器对象的parse()方法解析XML文档，得到代表整个文档的*/</span><br><span class="line">		</span><br><span class="line">		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span><br><span class="line">		DocumentBuilder builder = factory.newDocumentBuilder();</span><br><span class="line">		Document document = builder.parse(new File(&quot;xml/book.xml&quot;));</span><br><span class="line">		</span><br><span class="line">		//read(document);</span><br><span class="line">		list(document);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//读取文档</span><br><span class="line">	private static void read(Document document) &#123;</span><br><span class="line">		NodeList list = document.getElementsByTagName(&quot;售价&quot;);//取得所有的售价节点</span><br><span class="line">		Node price = list.item(0);//取第一个子节点，即价格</span><br><span class="line">		String value = price.getTextContent();//取得价格节点的文本内容</span><br><span class="line">		System.out.println(value);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//对文档进行更新</span><br><span class="line">	@Test</span><br><span class="line">	public void update() throws Exception&#123;</span><br><span class="line">		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span><br><span class="line">		DocumentBuilder builder = factory.newDocumentBuilder();</span><br><span class="line">		Document document = builder.parse(new File(&quot;xml/book.xml&quot;));</span><br><span class="line">		NodeList list = document.getElementsByTagName(&quot;售价&quot;);</span><br><span class="line">		Node price = list.item(0);</span><br><span class="line">		price.setTextContent(&quot;50&quot;);//设置价格节点的文本内容</span><br><span class="line">		</span><br><span class="line">		//注意：以上的操作都是在内存中进行操作，我们还需要将内存中的内容写到xml文档中</span><br><span class="line">		TransformerFactory t_factory = TransformerFactory.newInstance();//得到一个产生转换器的工厂</span><br><span class="line">		Transformer transformer = t_factory.newTransformer();//得到一个转换器</span><br><span class="line">		//transform的第一个参数是源，第二个参数是目标</span><br><span class="line">		transformer.transform(new DOMSource(document), new StreamResult(new File(&quot;xml/book.xml&quot;)));</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//增加一个售价节点</span><br><span class="line">	@Test</span><br><span class="line">	public void add() throws Exception&#123;</span><br><span class="line">		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span><br><span class="line">		DocumentBuilder builder = factory.newDocumentBuilder();</span><br><span class="line">		Document document = builder.parse(new File(&quot;xml/book.xml&quot;));</span><br><span class="line">		</span><br><span class="line">		Node parent =  document.getElementsByTagName(&quot;书&quot;).item(0);</span><br><span class="line">		//先要产生一个售价节点和其中的文本内容</span><br><span class="line">		Node child = document.createElement(&quot;售价&quot;);</span><br><span class="line">		child.setTextContent(&quot;120&quot;);</span><br><span class="line">		</span><br><span class="line">		parent.appendChild(child);</span><br><span class="line">		//还有一种插入的方法</span><br><span class="line">		//parent.insertBefore(child, document.getElementsByTagName(&quot;书名&quot;).item(0));</span><br><span class="line">	</span><br><span class="line">		TransformerFactory t_factory = TransformerFactory.newInstance();</span><br><span class="line">		Transformer transformer = t_factory.newTransformer();</span><br><span class="line">		transformer.transform(new DOMSource(document), new StreamResult(new File(&quot;xml/book.xml&quot;)));</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//删除文档的相关节点</span><br><span class="line">	@Test</span><br><span class="line">	public void delete() throws Exception&#123;</span><br><span class="line">		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span><br><span class="line">		DocumentBuilder builder = factory.newDocumentBuilder();</span><br><span class="line">		Document document = builder.parse(new File(&quot;xml/book.xml&quot;));</span><br><span class="line">		</span><br><span class="line">		NodeList list = document.getElementsByTagName(&quot;售价&quot;);</span><br><span class="line">		Node child = list.item(2);</span><br><span class="line">		child.getParentNode().removeChild(child);</span><br><span class="line">		</span><br><span class="line">		TransformerFactory t_factory = TransformerFactory.newInstance();</span><br><span class="line">		Transformer transformer = t_factory.newTransformer();</span><br><span class="line">		transformer.transform(new DOMSource(document), new StreamResult(new File(&quot;xml/book.xml&quot;)));</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//操作标签的属性</span><br><span class="line">	@Test</span><br><span class="line">	public void updateAttribute() throws Exception&#123;</span><br><span class="line">		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span><br><span class="line">		DocumentBuilder builder = factory.newDocumentBuilder();</span><br><span class="line">		Document document = builder.parse(new File(&quot;xml/book.xml&quot;));</span><br><span class="line">		</span><br><span class="line">		Element element = (Element) document.getElementsByTagName(&quot;书&quot;).item(0);</span><br><span class="line">		element.setAttribute(&quot;name&quot;, &quot;yyy&quot;);//可以用来增加属性也可以用来改变已有属性</span><br><span class="line">		</span><br><span class="line">		TransformerFactory t_factory = TransformerFactory.newInstance();</span><br><span class="line">		Transformer transformer = t_factory.newTransformer();</span><br><span class="line">		transformer.transform(new DOMSource(document), new StreamResult(new File(&quot;xml/book.xml&quot;)));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//遍历文档</span><br><span class="line">	public static void list(Node node) throws Exception&#123;</span><br><span class="line">		if(node.getNodeType() == Node.ELEMENT_NODE)&#123;//判断当前节点是不是元素</span><br><span class="line">			System.out.println(node.getNodeName());</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		NodeList list = node.getChildNodes();</span><br><span class="line">		for(int i = 0; i &lt; list.getLength(); i++)&#123;</span><br><span class="line">			</span><br><span class="line">			Node child = list.item(i);</span><br><span class="line">			list(child);</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    
+	
+
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="categories/Study/JavaEE/1.xml编程(我的JavaEE笔记).html"
+           data-title="1.xml编程(我的JavaEE笔记)" data-url="http://yoursite.com/categories/Study/JavaEE/1.xml编程(我的JavaEE笔记).html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="YJ" />
+          <p class="site-author-name" itemprop="name">YJ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YJ</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yjaal"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

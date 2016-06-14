@@ -1,0 +1,649 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaEE," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="主要内容：
+
+一个小例子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.使用jaxp的一个案例(我的JavaEE笔记)">
+<meta property="og:url" content="http://yoursite.com/2016/06/07/2.使用jaxp的一个案例(我的JavaEE笔记)/index.html">
+<meta property="og:site_name" content="YJ's Blog">
+<meta property="og:description" content="主要内容：
+
+一个小例子">
+<meta property="og:updated_time" content="2016-06-14T06:25:24.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2.使用jaxp的一个案例(我的JavaEE笔记)">
+<meta name="twitter:description" content="主要内容：
+
+一个小例子">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/07/2.使用jaxp的一个案例(我的JavaEE笔记)/"/>
+
+  <title> 2.使用jaxp的一个案例(我的JavaEE笔记) | YJ's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+	
+	<!----------- add Fork me on Github ------------>
+    
+    <a href="https://github.com/yjaal"><img style="position: absolute; top: 500; left: 0; border: 0;" src="https://camo.githubusercontent.com/8b6b8ccc6da3aa5722903da7b58eb5ab1081adee/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_orange_ff7600.png"></a>
+    
+    <!----------- add Fork me on Github ------------>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">YJ's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Some Notes</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                2.使用jaxp的一个案例(我的JavaEE笔记)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-07T18:57:30+08:00" content="2016-06-07">
+              2016-06-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Study/" itemprop="url" rel="index">
+                    <span itemprop="name">Study</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Study/JavaEE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaEE</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/07/2.使用jaxp的一个案例(我的JavaEE笔记)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/07/2.使用jaxp的一个案例(我的JavaEE笔记)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>主要内容：</p>
+<ul>
+<li>一个小例子</li>
+</ul>
+<a id="more"></a>
+<p>这里我们给出一份xml文档，里面存有一些学生的相关信息，我们需要对这份文档进行相关的解析。</p>
+<h1 id="1-首先给出student-xml"><a href="#1-首先给出student-xml" class="headerlink" title="1.首先给出student.xml"></a>1.首先给出student.xml</h1><p><strong><em>(xml/student.xml)</em></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;</span><br><span class="line">&lt;exam&gt;</span><br><span class="line">	&lt;student examid=&quot;222&quot; idcard=&quot;111&quot;&gt;</span><br><span class="line">		&lt;name&gt;张三&lt;/name&gt;</span><br><span class="line">		&lt;location&gt;沈阳&lt;/location&gt;</span><br><span class="line">		&lt;grade&gt;89&lt;/grade&gt;</span><br><span class="line">	&lt;/student&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;student examid=&quot;444&quot; idcard=&quot;333&quot;&gt;</span><br><span class="line">		&lt;name&gt;李四&lt;/name&gt;</span><br><span class="line">		&lt;location&gt;大连&lt;/location&gt;</span><br><span class="line">		&lt;grade&gt;97&lt;/grade&gt;</span><br><span class="line">	&lt;/student&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	&lt;student examid=&quot;5555&quot; idcard=&quot;5555&quot;&gt;</span><br><span class="line">		&lt;name&gt;阿猫&lt;/name&gt;</span><br><span class="line">		&lt;location&gt;西安&lt;/location&gt;</span><br><span class="line">		&lt;grade&gt;86.0&lt;/grade&gt;</span><br><span class="line">	&lt;/student&gt;</span><br><span class="line">	</span><br><span class="line">&lt;/exam&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="2-学生实体类"><a href="#2-学生实体类" class="headerlink" title="2.学生实体类"></a>2.学生实体类</h1><p><strong><em>（src/cn.itcast.domain.Student.java）</em></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">package cn.itcast.domain;</span><br><span class="line"></span><br><span class="line">public class Student &#123;</span><br><span class="line">	private String examId;</span><br><span class="line">	private String idcard;</span><br><span class="line">	private String name;</span><br><span class="line">	private String location;</span><br><span class="line">	private double grade;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	public String getExamId() &#123;</span><br><span class="line">		return examId;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setExamId(String examId) &#123;</span><br><span class="line">		this.examId = examId;</span><br><span class="line">	&#125;</span><br><span class="line">	public String getIdcard() &#123;</span><br><span class="line">		return idcard;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setIdcard(String idcard) &#123;</span><br><span class="line">		this.idcard = idcard;</span><br><span class="line">	&#125;</span><br><span class="line">	public String getName() &#123;</span><br><span class="line">		return name;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setName(String name) &#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	public String getLocation() &#123;</span><br><span class="line">		return location;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setLocation(String location) &#123;</span><br><span class="line">		this.location = location;</span><br><span class="line">	&#125;</span><br><span class="line">	public double getGrade() &#123;</span><br><span class="line">		return grade;</span><br><span class="line">	&#125;</span><br><span class="line">	public void setGrade(double grade) &#123;</span><br><span class="line">		this.grade = grade;</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-工具类"><a href="#3-工具类" class="headerlink" title="3.工具类"></a>3.工具类</h1><p><strong><em>（src/cn.itcast.utils.XmlUtils.java）</em></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">package cn.itcast.utils;</span><br><span class="line">import java.io.File;</span><br><span class="line">import javax.management.RuntimeErrorException;</span><br><span class="line">import javax.xml.parsers.DocumentBuilder;</span><br><span class="line">import javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line">import javax.xml.parsers.ParserConfigurationException;</span><br><span class="line">import javax.xml.transform.Transformer;</span><br><span class="line">import javax.xml.transform.TransformerConfigurationException;</span><br><span class="line">import javax.xml.transform.TransformerFactory;</span><br><span class="line">import javax.xml.transform.dom.DOMSource;</span><br><span class="line">import javax.xml.transform.stream.StreamResult;</span><br><span class="line">import org.w3c.dom.Document;</span><br><span class="line">import org.w3c.dom.Element;</span><br><span class="line">import org.w3c.dom.Node;</span><br><span class="line">import org.w3c.dom.NodeList;</span><br><span class="line">import cn.itcast.domain.Student;</span><br><span class="line"></span><br><span class="line">public class XmlUtils &#123;</span><br><span class="line">	//将xml文档读到内存中</span><br><span class="line">	public static Document getDocument() throws Exception&#123;</span><br><span class="line">		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span><br><span class="line">		DocumentBuilder builder = factory.newDocumentBuilder();</span><br><span class="line">		Document document = builder.parse(new File(&quot;xml/student.xml&quot;));</span><br><span class="line">		</span><br><span class="line">		return document;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//将修改过的文档从内存中写到实际的xml文档中</span><br><span class="line">	public static void writeDocument(Document document) throws Exception&#123;</span><br><span class="line">		TransformerFactory factory = TransformerFactory.newInstance();</span><br><span class="line">		Transformer transformer = factory.newTransformer();</span><br><span class="line">		transformer.transform(new DOMSource(document), new StreamResult(new File(&quot;xml/student.xml&quot;)));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//添加学生</span><br><span class="line">	public void addStudent(Student student)&#123;</span><br><span class="line">		try&#123;</span><br><span class="line">			Document document = XmlUtils.getDocument();</span><br><span class="line">			//得到exam节点</span><br><span class="line">			Node parent = document.getElementsByTagName(&quot;exam&quot;).item(0);</span><br><span class="line">			//构造一个学生节点</span><br><span class="line">			Element child = document.createElement(&quot;student&quot;);</span><br><span class="line">			child.setAttribute(&quot;examId&quot;, student.getExamId());</span><br><span class="line">			child.setAttribute(&quot;idcard&quot;, student.getIdcard());</span><br><span class="line">			</span><br><span class="line">			Element name = document.createElement(&quot;name&quot;);</span><br><span class="line">			name.setTextContent(student.getName());</span><br><span class="line">			</span><br><span class="line">			Element location = document.createElement(&quot;location&quot;);</span><br><span class="line">			location.setTextContent(student.getLocation());</span><br><span class="line">			</span><br><span class="line">			Element grade = document.createElement(&quot;grade&quot;);//注意：分数是double型的，需要转换成字符串</span><br><span class="line">			grade.setTextContent(student.getGrade() + &quot;&quot;);</span><br><span class="line">			</span><br><span class="line">			child.appendChild(name);</span><br><span class="line">			child.appendChild(location);</span><br><span class="line">			child.appendChild(grade);</span><br><span class="line">			parent.appendChild(child);</span><br><span class="line">			</span><br><span class="line">			//将内存中的内容写到xml文档中去</span><br><span class="line">			XmlUtils.writeDocument(document);	</span><br><span class="line">		&#125;catch(Exception e)&#123;</span><br><span class="line">			throw new RuntimeException(&quot;录入失败！&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//删除学生</span><br><span class="line">	public void deleteStudent(String name) &#123;</span><br><span class="line">		try&#123;</span><br><span class="line">			Document document = XmlUtils.getDocument();</span><br><span class="line">			NodeList list = document.getElementsByTagName(&quot;name&quot;);</span><br><span class="line">			for(int i = 0; i &lt; list.getLength(); i++)&#123;</span><br><span class="line">				Node node = list.item(i);</span><br><span class="line">				if(node.getTextContent().equals(name))&#123;</span><br><span class="line">					//这里是删除student节点，即name的父节点</span><br><span class="line">					node.getParentNode().getParentNode().removeChild(node.getParentNode());</span><br><span class="line">					XmlUtils.writeDocument(document);</span><br><span class="line">					return;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			throw new RuntimeException(&quot;您要删除的学生不存在！！！&quot;);</span><br><span class="line">		&#125;catch(Exception e)&#123;</span><br><span class="line">			throw new RuntimeException(&quot;删除失败！！！&quot;);</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//查找学生</span><br><span class="line">	public Student findStudent(String examid)&#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			Document document = XmlUtils.getDocument();</span><br><span class="line">			NodeList list = document.getElementsByTagName(&quot;student&quot;);</span><br><span class="line">			for(int i = 0; i &lt; list.getLength(); i++)&#123;</span><br><span class="line">				//因为document中没有取得属性值的方法，所以要转换成Element对象</span><br><span class="line">				</span><br><span class="line">				Element element = (Element) list.item(i);//取得其中一个学生节点</span><br><span class="line">				</span><br><span class="line">				if(element.getAttribute(&quot;examid&quot;).equals(examid))&#123;</span><br><span class="line">					Student student = new Student();</span><br><span class="line">					student.setExamId(examid);</span><br><span class="line">					student.setIdcard(element.getAttribute(&quot;idcard&quot;));</span><br><span class="line">					student.setName(element.getElementsByTagName(&quot;name&quot;).item(0).getTextContent());</span><br><span class="line">					student.setLocation(element.getElementsByTagName(&quot;location&quot;).item(0).getTextContent());</span><br><span class="line">					student.setGrade(Double.parseDouble(element.getElementsByTagName(&quot;grade&quot;).item(0).getTextContent()));</span><br><span class="line">					</span><br><span class="line">					return student;</span><br><span class="line">					</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			return null;</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			throw new RuntimeException(&quot;没有您想要查找的学生！！！&quot;);</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="4-测试类"><a href="#4-测试类" class="headerlink" title="4.测试类"></a>4.测试类</h1><p><strong><em>（src/cn.itcast.Demo2.java）</em></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">package cn.itcast;</span><br><span class="line">import java.io.BufferedReader;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStreamReader;</span><br><span class="line">import org.junit.Test;</span><br><span class="line">import cn.itcast.domain.Student;</span><br><span class="line">import cn.itcast.utils.XmlUtils;</span><br><span class="line">public class Demo2 &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) throws Exception&#123;</span><br><span class="line">		System.out.println(&quot;（a）添加                （b）删除              （c）查找&quot;);</span><br><span class="line">		System.out.println(&quot;请输入您操作类型代号：&quot;);</span><br><span class="line">		</span><br><span class="line">		BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));</span><br><span class="line">		</span><br><span class="line">		String type = buffer.readLine();</span><br><span class="line">		//添加</span><br><span class="line">		if(type.equalsIgnoreCase(&quot;a&quot;))&#123;</span><br><span class="line">			try&#123;</span><br><span class="line">				Student stu = new Student();</span><br><span class="line">				System.out.println(&quot;请输入学生的姓名：&quot;);</span><br><span class="line">				stu.setName(buffer.readLine());</span><br><span class="line">				</span><br><span class="line">				System.out.println(&quot;请输入学生的准考证号：&quot;);</span><br><span class="line">				stu.setExamId(buffer.readLine());</span><br><span class="line">				</span><br><span class="line">				System.out.println(&quot;请输入学生的身份证号：&quot;);</span><br><span class="line">				stu.setIdcard(buffer.readLine());</span><br><span class="line">				</span><br><span class="line">				System.out.println(&quot;请输入学生的地址：&quot;);</span><br><span class="line">				stu.setLocation(buffer.readLine());</span><br><span class="line">				</span><br><span class="line">				System.out.println(&quot;请输入学生的分数：&quot;);</span><br><span class="line">				stu.setGrade(Double.parseDouble(buffer.readLine()));</span><br><span class="line">				XmlUtils utils = new XmlUtils();</span><br><span class="line">				utils.addStudent(stu);</span><br><span class="line">				System.out.println(&quot;录入成功！&quot;);</span><br><span class="line">			&#125;catch(Exception e)&#123;</span><br><span class="line">				System.out.println(e.getMessage());</span><br><span class="line">			&#125;</span><br><span class="line">		//删除</span><br><span class="line">		&#125;else if(type.equalsIgnoreCase(&quot;b&quot;))&#123;</span><br><span class="line">			try&#123;</span><br><span class="line">				System.out.println(&quot;请输入您要删除学生的名字：&quot;);</span><br><span class="line">				String name = buffer.readLine();</span><br><span class="line">				XmlUtils utils = new XmlUtils();</span><br><span class="line">				utils.deleteStudent(name);</span><br><span class="line">				System.out.println(&quot;删除成功！&quot;);</span><br><span class="line">			&#125;catch(Exception e)&#123;</span><br><span class="line">				System.out.println(e.getMessage());</span><br><span class="line">			&#125;</span><br><span class="line">		//查找</span><br><span class="line">		&#125;else if(type.equalsIgnoreCase(&quot;c&quot;))&#123;</span><br><span class="line">			try&#123;</span><br><span class="line">				System.out.println(&quot;请输入您想要查找学生的准考证号：&quot;);</span><br><span class="line">				String examid = buffer.readLine();</span><br><span class="line">				Student student = new Student();</span><br><span class="line">				XmlUtils utils = new XmlUtils();</span><br><span class="line">				student = utils.findStudent(examid);</span><br><span class="line">				System.out.println(&quot;您要找的学生的信息如下：&quot;);</span><br><span class="line">				System.out.println(&quot;学生姓名：&quot; + student.getName());</span><br><span class="line">				System.out.println(&quot;学生准考证号：&quot; + student.getExamId());</span><br><span class="line">				System.out.println(&quot;学生身份证号：&quot; + student.getIdcard());</span><br><span class="line">				System.out.println(&quot;学生地址：&quot; + student.getLocation());</span><br><span class="line">				System.out.println(&quot;学生分数：&quot; + student.getGrade());</span><br><span class="line">				</span><br><span class="line">			&#125;catch(Exception e)&#123;</span><br><span class="line">				System.out.println(&quot;查找学生失败！&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			System.out.println(&quot;没有您想要的操作！！！&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong><em>注意</em></strong>：这里我们需要注意删除学生的时候。而在异常抛出的时候我们需要注意抛出什么样的异常。而工具类中向上抛出的时候是抛到了测试类中了，我们使用e.getMessage()方法获得抛过来的异常消息。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaEE/" rel="tag">#JavaEE</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/07/1.xml编程(我的JavaEE笔记)/" rel="next" title="1.xml编程(我的JavaEE笔记)">
+                <i class="fa fa-chevron-left"></i> 1.xml编程(我的JavaEE笔记)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/14/Hello-World/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/07/2.使用jaxp的一个案例(我的JavaEE笔记)/"
+           data-title="2.使用jaxp的一个案例(我的JavaEE笔记)" data-url="http://yoursite.com/2016/06/07/2.使用jaxp的一个案例(我的JavaEE笔记)/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="YJ" />
+          <p class="site-author-name" itemprop="name">YJ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-首先给出student-xml"><span class="nav-number">1.</span> <span class="nav-text">1.首先给出student.xml</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-学生实体类"><span class="nav-number">2.</span> <span class="nav-text">2.学生实体类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-工具类"><span class="nav-number">3.</span> <span class="nav-text">3.工具类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-测试类"><span class="nav-number">4.</span> <span class="nav-text">4.测试类</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YJ</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yjaal"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
